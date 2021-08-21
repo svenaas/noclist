@@ -1,11 +1,9 @@
 #!/usr/bin/env ruby
-require_relative './lib/badsec.rb'
+require_relative './lib/badsec'
 require 'json'
 
 class Noclist
-  def self::print_noclist
-    noclist = []
-
+  def self.print_noclist
     begin
       badsec = BADSEC_API_Client.new
       noclist = badsec.get_noclist
@@ -18,7 +16,7 @@ class Noclist
   end
 end
 
-if $0 == __FILE__
+if $PROGRAM_NAME == __FILE__
   if Noclist.print_noclist
     exit 0
   else

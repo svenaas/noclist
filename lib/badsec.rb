@@ -24,7 +24,7 @@ class BADSEC_API_Client
       # This is convenient because the error can be rescued and the block retried
       response.value
 
-      return token = response['Badsec-Authentication-Token']
+      return response['Badsec-Authentication-Token']
     rescue Net::HTTPFatalError
       retry if tries < 3
       raise API_Error.new('Server returned unsuccessful response code')
@@ -39,7 +39,7 @@ class BADSEC_API_Client
 
   def get_noclist
     token = get_authentication_token
-    checksum = Digest::SHA256.hexdigest(token + '/users')
+    checksum = Digest::SHA256.hexdigest("#{token}/users")
     tries = 0
     begin
       tries += 1
