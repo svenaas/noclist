@@ -66,4 +66,4 @@ The test suite relies on RSpec. It can be invoked in either Ruby environment:
 
 ### Docker Ruby
 
-`docker run -it testapp bundle exec rspec`
+`docker run -it noclist bundle exec rspec`
