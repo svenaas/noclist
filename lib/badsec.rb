@@ -5,7 +5,7 @@ class API_Error < StandardError
 end
 
 class BADSEC_API_Client
-  def initialize(server_uri = "http://localhost:8888")
+  def initialize(server_uri = 'http://localhost:8888')
     uri = URI server_uri
     @service = Net::HTTP.new uri.host, uri.port
 
@@ -27,10 +27,10 @@ class BADSEC_API_Client
       return token = response['Badsec-Authentication-Token']
     rescue Net::HTTPFatalError
       retry if tries < 3
-      raise API_Error.new("Server returned unsuccessful response code")
+      raise API_Error.new('Server returned unsuccessful response code')
     rescue Net::OpenTimeout
       retry if tries < 3
-      raise API_Error.new("Server timed out")
+      raise API_Error.new('Server timed out')
     rescue StandardError => e
       retry if tries < 3
       raise API_Error.new("Server error: #{e}")
@@ -52,10 +52,10 @@ class BADSEC_API_Client
       return response.body.split
     rescue Net::HTTPFatalError
       retry if tries < 3
-      raise API_Error.new("Server returned unsuccessful response code")
+      raise API_Error.new('Server returned unsuccessful response code')
     rescue Net::OpenTimeout
       retry if tries < 3
-      raise API_Error.new("Server timed out")
+      raise API_Error.new('Server timed out')
     rescue StandardError => e
       retry if tries < 3
       raise API_Error.new("Server error: #{e}")
