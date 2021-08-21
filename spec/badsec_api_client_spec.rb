@@ -18,6 +18,7 @@ RSpec.describe BADSEC_API_Client do
         stub_request(:head, 'http://localhost:8888/auth').
           to_timeout
         expect{badsec.get_authentication_token}.to raise_error(API_Error, "Server timed out")
+        expect(WebMock).to have_requested(:head, 'http://localhost:8888/auth').times(3)
       end
     end
 
@@ -27,6 +28,7 @@ RSpec.describe BADSEC_API_Client do
           to_timeout.times(2).then.
           to_return(status: 200, body: "", headers: { 'Badsec-Authentication-Token' => "12345"})
         expect(badsec.get_authentication_token).to eq "12345"
+        expect(WebMock).to have_requested(:head, 'http://localhost:8888/auth').times(3)
       end
     end
 
@@ -35,6 +37,7 @@ RSpec.describe BADSEC_API_Client do
         stub_request(:head, 'http://localhost:8888/auth').
           to_return(status: 500)
         expect{badsec.get_authentication_token}.to raise_error(API_Error, "Server returned unsuccessful response code")
+        expect(WebMock).to have_requested(:head, 'http://localhost:8888/auth').times(3)
       end
     end
 
@@ -44,6 +47,7 @@ RSpec.describe BADSEC_API_Client do
           to_return(status: 500).times(2).then.
           to_return(status: 200, body: "", headers: { 'Badsec-Authentication-Token' => "12345"})
         expect(badsec.get_authentication_token).to eq "12345"
+        expect(WebMock).to have_requested(:head, 'http://localhost:8888/auth').times(3)
       end
     end
 
@@ -52,6 +56,7 @@ RSpec.describe BADSEC_API_Client do
         stub_request(:head, 'http://localhost:8888/auth').
           to_raise("Balky server error")
         expect{badsec.get_authentication_token}.to raise_error(API_Error, "Server error: Balky server error")
+        expect(WebMock).to have_requested(:head, 'http://localhost:8888/auth').times(3)
       end
     end
 
@@ -61,6 +66,7 @@ RSpec.describe BADSEC_API_Client do
           to_raise("Balky server error").times(2).then.
           to_return(status: 200, body: "", headers: { 'Badsec-Authentication-Token' => "12345"})
         expect(badsec.get_authentication_token).to eq "12345"
+        expect(WebMock).to have_requested(:head, 'http://localhost:8888/auth').times(3)
       end
     end
   end
@@ -93,6 +99,7 @@ RSpec.describe BADSEC_API_Client do
           stub_request(:get, 'http://localhost:8888/users').
             to_timeout
           expect{badsec.get_noclist}.to raise_error(API_Error, "Server timed out")
+          expect(WebMock).to have_requested(:get, 'http://localhost:8888/users').times(3)
         end
       end
 
@@ -102,6 +109,7 @@ RSpec.describe BADSEC_API_Client do
             to_timeout.times(2).then.
             to_return(status: 200, body: "1\n2\n3\n4\n5\n")
           expect(badsec.get_noclist).to eq ['1','2','3','4','5']
+          expect(WebMock).to have_requested(:get, 'http://localhost:8888/users').times(3)
         end
       end
 
@@ -110,6 +118,7 @@ RSpec.describe BADSEC_API_Client do
           stub_request(:get, 'http://localhost:8888/users').
             to_return(status: 500)
           expect{badsec.get_noclist}.to raise_error(API_Error, "Server returned unsuccessful response code")
+          expect(WebMock).to have_requested(:get, 'http://localhost:8888/users').times(3)
         end
       end
 
@@ -119,6 +128,7 @@ RSpec.describe BADSEC_API_Client do
             to_return(status: 500).times(2).then.
             to_return(status: 200, body: "1\n2\n3\n4\n5\n")
           expect(badsec.get_noclist).to eq ['1','2','3','4','5']
+          expect(WebMock).to have_requested(:get, 'http://localhost:8888/users').times(3)
         end
       end
 
@@ -127,6 +137,7 @@ RSpec.describe BADSEC_API_Client do
           stub_request(:get, 'http://localhost:8888/users').
             to_raise("Balky server error")
           expect{badsec.get_noclist}.to raise_error(API_Error, "Server error: Balky server error")
+          expect(WebMock).to have_requested(:get, 'http://localhost:8888/users').times(3)
         end
       end
 
@@ -136,6 +147,7 @@ RSpec.describe BADSEC_API_Client do
             to_raise("Balky server error").times(2).then.
             to_return(status: 200, body: "1\n2\n3\n4\n5\n")
           expect(badsec.get_noclist).to eq ['1','2','3','4','5']
+          expect(WebMock).to have_requested(:get, 'http://localhost:8888/users').times(3)
         end
       end
     end
