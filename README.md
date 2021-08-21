@@ -48,8 +48,8 @@ The step depends on Ruby environment:
 ### Expected Behavior and Output
 
 If the interaction with the BADSEC server was successful, the only output will be the 
-list so user IDs that server provided, formatted as JSON. Execution will terminate with 
-an exit code of 0.
+list of user IDs that that server provided, formatted as JSON. Execution will terminate 
+with an exit code of 0.
 
 If the server timed out, returned HTTP status codes other than 200, or raised other errors
 on three consecutive attempts to either of the two API endpoints it relies on then the 
