@@ -75,7 +75,7 @@ RSpec.describe BADSEC_API_Client do
       it "includes a valid checksum in an API call" do
         stub_request(:get, 'http://localhost:8888/users').to_return(status: 200)
         expect{badsec.get_noclist}.not_to raise_error
-        WebMock.should have_requested(:get, 'http://localhost:8888/users').with(
+        expect(WebMock).to have_requested(:get, 'http://localhost:8888/users').with(
           headers: {"X-Request-Checksum" => Digest::SHA256.hexdigest('12345/users')}
         )
       end
